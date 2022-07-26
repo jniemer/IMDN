@@ -51,7 +51,7 @@ end = torch.cuda.Event(enable_timing=True)
 for imname in filelist:
     im_gt = cv2.imread(imname, cv2.IMREAD_COLOR)[:, :, [2, 1, 0]]  # BGR to RGB
     im_gt = utils.modcrop(im_gt, opt.upscale_factor)
-    im_l = cv2.imread(opt.test_lr_folder + imname.split('/')[-1].split('.')[0] + 'x' + str(opt.upscale_factor) + ext, cv2.IMREAD_COLOR)[:, :, [2, 1, 0]]  # BGR to RGB
+    im_l = cv2.imread(opt.test_lr_folder + imname.split('/')[-1], cv2.IMREAD_COLOR)[:, :, [2, 1, 0]]  # BGR to RGB
     if len(im_gt.shape) < 3:
         im_gt = im_gt[..., np.newaxis]
         im_gt = np.concatenate([im_gt] * 3, 2)
