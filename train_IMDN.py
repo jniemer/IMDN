@@ -71,10 +71,12 @@ device = torch.device('cuda' if cuda else 'cpu')
 
 print("===> Loading datasets")
 
-trainset = DIV2K.div2k(args)
-testset = Set5_val.DatasetFromFolderVal("Test_Datasets/Set5/",
-                                       "Test_Datasets/Set5_LR/x{}/".format(args.scale),
-                                       args.scale)
+trainset = Set5_val.DatasetFromFolderVal(args.root + "/faces/original/", 
+                                         args.root + "/faces/X{}/".format(args.scale),
+                                         args.scale)
+testset = Set5_val.DatasetFromFolderVal(args.root + "/faces_val/original/", 
+                                         args.root + "/faces_val/X{}/".format(args.scale),
+                                         args.scale)
 training_data_loader = DataLoader(dataset=trainset, num_workers=args.threads, batch_size=args.batch_size, shuffle=True, pin_memory=True, drop_last=True)
 testing_data_loader = DataLoader(dataset=testset, num_workers=args.threads, batch_size=args.testBatchSize,
                                  shuffle=False)
