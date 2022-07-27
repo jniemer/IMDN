@@ -33,8 +33,6 @@ filelist = utils.get_list(filepath, ext=ext)
 model = architecture.IMDN(upscale=opt.upscale_factor)
 model_dict = utils.load_state_dict(opt.checkpoint)
 model.load_state_dict(model_dict, strict=True)
-
-i = 0
 start = torch.cuda.Event(enable_timing=True)
 end = torch.cuda.Event(enable_timing=True)
 
@@ -62,10 +60,8 @@ for imname in filelist:
     crop_size = opt.upscale_factor
     cropped_sr_img = utils.shave(out_img, crop_size)
         
-    output_folder = os.path.join(opt.output_folder, imname)
+    out_filename = os.path.join(opt.output_folder, os.path.basename(imname))
 
     if not os.path.exists(opt.output_folder):
         os.makedirs(opt.output_folder)
-
-    cv2.imwrite(output_folder, out_img[:, :, [2, 1, 0]])
-    i += 1
+    cv2.imwrite(out_filename, out_img[:, :, [2, 1, 0]])
